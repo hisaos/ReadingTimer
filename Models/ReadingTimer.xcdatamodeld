@@ -1,0 +1,8 @@
+// Entity: LapTimeEntity
+// Attributes:
+// - id: UUID
+// - number: Int64
+// - duration: Double
+// - timestamp: Date
+// - isMarked: Boolean
+// - isDeleted: Boolean 
