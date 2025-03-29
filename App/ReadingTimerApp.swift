@@ -6,7 +6,8 @@ struct ReadingTimerApp: App {
     
     var body: some Scene {
         WindowGroup {
-          TimerView(context: persistenceController.container.viewContext)                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            TimerView(context: persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 } 

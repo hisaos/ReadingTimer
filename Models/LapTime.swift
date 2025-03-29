@@ -1,3 +1,5 @@
+import Foundation
+
 struct LapTime: Identifiable {
     let id: UUID
     let number: Int

@@ -1,7 +1,7 @@
+import SwiftUI
 import CoreData
 
 struct TimerView: View {
-    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var timerManager: TimerManager
     
     init(context: NSManagedObjectContext) {
@@ -14,6 +14,13 @@ struct TimerView: View {
                 // タイマー表示
                 Text(timeString(from: timerManager.elapsedTime))
                     .font(.system(size: 60, weight: .medium, design: .monospaced))
+                
+                // 最新のラップタイム表示
+                if let lastLap = timerManager.laps.last {
+                    Text("Lap \(lastLap.number): \(timeString(from: lastLap.duration))")
+                        .font(.system(size: 20, weight: .medium, design: .monospaced))
+                        .foregroundColor(.secondary)
+                }
                 
                 // コントロールボタン
                 HStack(spacing: 50) {
@@ -40,8 +47,8 @@ struct TimerView: View {
                 }
                 
                 // ラップ一覧へのナビゲーション
-                NavigationLink("ラップタイム一覧") {
-                    LapListView(laps: $timerManager.laps)
+                NavigationLink(destination: LapListView(laps: $timerManager.laps, timerManager: timerManager)) {
+                    Text("ラップタイム一覧")
                 }
             }
             .padding()

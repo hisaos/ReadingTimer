@@ -3,16 +3,23 @@ import CoreData
 class TimerManager: ObservableObject {
     @Published var elapsedTime: TimeInterval = 0
     @Published var isRunning: Bool = false
+    @Published var laps: [LapTime] = []
     private let lapStore: LapTimeStore
     
     init(context: NSManagedObjectContext) {
         self.lapStore = LapTimeStore(context: context)
+        self.laps = lapStore.laps
     }
     
     private var timer: Timer?
     private var startTime: Date?
     
-    var laps: [LapTime] { lapStore.laps }
+    func reset() {
+        stopTimer()
+        elapsedTime = 0
+        lapStore.deleteAllLaps()
+        laps.removeAll()
+    }
     
     func lap() {
         guard isRunning else { return }
@@ -23,10 +30,12 @@ class TimerManager: ObservableObject {
             timestamp: Date()
         )
         lapStore.addLap(lapTime)
+        laps = lapStore.laps
     }
     
     func updateLap(_ lap: LapTime) {
         lapStore.updateLap(lap)
+        laps = lapStore.laps
     }
     
     func startStop() {

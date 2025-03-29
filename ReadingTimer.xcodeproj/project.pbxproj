@@ -42,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		81B825862D98834E00FDD3E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81CC24922D8CE04D002E4371 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		81DD737D2D8CD3CB0097D870 /* ReadingTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReadingTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81DD73922D8CD3CD0097D870 /* ReadingTimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReadingTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +155,7 @@
 		81DD73C22D8CD8E30097D870 /* ReadingTimer */ = {
 			isa = PBXGroup;
 			children = (
+				81B825862D98834E00FDD3E1 /* Assets.xcassets */,
 				81DD73D92D8CD9A30097D870 /* Info.plist */,
 				81CC24912D8CE017002E4371 /* Preview Content */,
 			);
@@ -497,6 +499,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ReadingTimer/Preview Content\"";
+				DEVELOPMENT_TEAM = M6292SX6M4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ReadingTimer/Info.plist;
@@ -528,6 +531,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ReadingTimer/Preview Content\"";
+				DEVELOPMENT_TEAM = M6292SX6M4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ReadingTimer/Info.plist;

@@ -1,34 +1,57 @@
+import SwiftUI
+import UniformTypeIdentifiers
+
 struct LapListView: View {
     @Binding var laps: [LapTime]
     @State private var showingExportSheet = false
     @State private var exportURL: URL?
+    @State private var showingResetAlert = false
+    @ObservedObject var timerManager: TimerManager
     
     var body: some View {
         List {
-            ForEach($laps) { $lap in
+            ForEach(laps.indices, id: \.self) { index in
                 HStack {
-                    Text("Lap \(lap.number)")
+                    Text("Lap \(laps[index].number)")
                     Spacer()
-                    Text(timeString(from: lap.duration))
+                    Text(timeString(from: laps[index].duration))
+                        .font(.system(.body, design: .monospaced))
                     
-                    Button(action: { lap.isMarked.toggle() }) {
-                        Image(systemName: lap.isMarked ? "xmark.circle.fill" : "circle")
+                    Button(action: { laps[index].isMarked.toggle() }) {
+                        Image(systemName: laps[index].isMarked ? "xmark.circle.fill" : "circle")
                     }
                     
-                    Button(action: { lap.isDeleted.toggle() }) {
+                    Button(action: { laps[index].markedAsDeleted.toggle() }) {
                         Image(systemName: "trash")
                             .foregroundColor(.red)
                     }
                 }
-                .opacity(lap.isDeleted ? 0.5 : 1)
-                .font(lap.isDeleted ? .callout : .body)
+                .opacity(laps[index].markedAsDeleted ? 0.5 : 1)
+                .font(laps[index].markedAsDeleted ? .callout : .body)
             }
         }
         .navigationTitle("ラップタイム")
         .toolbar {
-            Button("CSVエクスポート") {
-                exportCSV()
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack {
+                    Button("CSVエクスポート") {
+                        exportCSV()
+                    }
+                    
+                    Button("リセット") {
+                        showingResetAlert = true
+                    }
+                    .foregroundColor(.red)
+                }
             }
+        }
+        .alert("ラップタイムのリセット", isPresented: $showingResetAlert) {
+            Button("キャンセル", role: .cancel) { }
+            Button("リセット", role: .destructive) {
+                timerManager.reset()
+            }
+        } message: {
+            Text("すべてのラップタイムが削除されます。この操作は取り消せません。")
         }
         .fileExporter(
             isPresented: $showingExportSheet,
@@ -48,7 +71,8 @@ struct LapListView: View {
     private func timeString(from timeInterval: TimeInterval) -> String {
         let minutes = Int(timeInterval) / 60
         let seconds = Int(timeInterval) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        let milliseconds = Int((timeInterval.truncatingRemainder(dividingBy: 1)) * 100)
+        return String(format: "%02d:%02d.%02d", minutes, seconds, milliseconds)
     }
     
     private func exportCSV() {
